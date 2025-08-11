@@ -1,0 +1,48 @@
+<h2>Máquinas</h2>
+
+<div class="card">
+  <form [formGroup]="form" (ngSubmit)="save()" class="grid grid-2">
+    <div>
+      <label>Nombre</label>
+      <input formControlName="name" placeholder="CNC-01" />
+      <small *ngIf="f.name.touched && f.name.invalid">Mínimo 3 caracteres</small>
+    </div>
+    <div>
+      <label>Fabricante</label>
+      <input formControlName="vendor" placeholder="Mazak" />
+    </div>
+    <div>
+      <label>Modelo</label>
+      <input formControlName="model" placeholder="Integrex i-200" />
+    </div>
+    <div>
+      <label>Estado</label>
+      <select formControlName="status">
+        <option value="ACTIVE">ACTIVA</option>
+        <option value="INACTIVE">INACTIVA</option>
+      </select>
+    </div>
+    <div style="grid-column:1 / -1; text-align:right;">
+      <button type="submit" [disabled]="loading">Guardar</button>
+      <span *ngIf="loading" style="margin-left:.5rem;">Guardando…</span>
+      <div class="error" *ngIf="errorMsg">{{ errorMsg }}</div>
+    </div>
+  </form>
+</div>
+
+<div class="card">
+  <table *ngIf="machines$ | async as machines">
+    <thead>
+      <tr><th>ID</th><th>Nombre</th><th>Fabricante</th><th>Modelo</th><th>Estado</th></tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let m of machines">
+        <td>{{ m.id }}</td>
+        <td>{{ m.name }}</td>
+        <td>{{ m.vendor }}</td>
+        <td>{{ m.model }}</td>
+        <td>{{ m.status }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

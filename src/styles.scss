@@ -1,1 +1,49 @@
 /* You can add global styles to this file, and also import other style files */
+:root { --bg:#0f172a; --card:#111827; --text:#e5e7eb; --muted:#9ca3af; --accent:#22d3ee; }
+
+* { box-sizing: border-box; }
+html, body { height:100%; }
+body {
+  margin:0; font-family: Inter, system-ui, Arial, sans-serif;
+  background:#0b1020; color:var(--text);
+}
+
+.topbar {
+  position: sticky; top:0; z-index:10;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:.75rem 1rem; background:rgba(2,6,23,.8); backdrop-filter: blur(6px);
+  border-bottom:1px solid rgba(255,255,255,.06);
+  h1 { margin:0; font-size:1.1rem; letter-spacing:.5px; color:var(--accent); }
+  nav a { color:var(--text); text-decoration:none; margin-left:1rem; opacity:.8; }
+  nav a.active { opacity:1; border-bottom:2px solid var(--accent); }
+}
+
+.container { max-width:1100px; margin: 1rem auto; padding: 0 1rem; }
+
+.card {
+  background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.02));
+  border:1px solid rgba(255,255,255,.06); border-radius:14px;
+  padding:1rem; margin-bottom:1rem; box-shadow: 0 8px 30px rgba(0,0,0,.25);
+}
+
+.grid { display:grid; gap:1rem; }
+.grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+label { display:block; font-size:.85rem; color:var(--muted); margin-bottom:.25rem; }
+input, select, button {
+  width:100%; padding:.6rem .7rem; border-radius:10px; border:1px solid rgba(255,255,255,.12);
+  background:#0d1326; color:var(--text);
+}
+button { cursor:pointer; font-weight:600; background:var(--accent); color:#062027; border:none; }
+small { color:#fca5a5; }
+
+table { width:100%; border-collapse: collapse; }
+th, td { text-align:left; padding:.6rem .5rem; border-bottom:1px solid rgba(255,255,255,.08); }
+thead th { color:var(--muted); font-weight:600; }
+.error { color:#fca5a5; margin-top:.5rem; }
+
+.kpi-big {
+  font-size: 2rem;
+  margin: 0.5rem 0;
+}
