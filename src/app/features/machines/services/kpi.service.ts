@@ -4,6 +4,10 @@ import { environment } from '../../../../environments/environments';
 
 import { Observable, shareReplay } from 'rxjs';
 
+export interface ProductionByMachine {
+  machine: string;
+  qty: number;
+}
 export interface ProductionKpi {
   avgTemperature: number;
   productionByMachine: { machine: string; qty: number }[];

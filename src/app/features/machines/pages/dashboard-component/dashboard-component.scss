@@ -8,5 +8,6 @@
 .skeleton { position:relative; overflow:hidden; background:#1f2937; }
 .skeleton::after { content:''; position:absolute; inset:0; background:linear-gradient(90deg, transparent, rgba(255,255,255,.08), transparent);
   animation: shimmer 1.1s infinite; }
+.mt-3 { margin-top: 1rem; }
 @keyframes shimmer { from{ transform:translateX(-100%);} to{ transform:translateX(100%);} }
 @media (max-width: 900px){ .grid-3{ grid-template-columns: 1fr; } }

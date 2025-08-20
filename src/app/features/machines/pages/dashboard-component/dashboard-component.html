@@ -32,7 +32,7 @@
 
 <div *ngIf="data$ | async as d; else skeleton" class="grid grid-3">
   <div class="card">
-    <h3>Produção por máquina</h3>
+    <h3>Producción por máquina</h3>
     <table *ngIf="d.productionByMachine?.length; else noProd">
       <thead><tr><th>Máquina</th><th>Qty</th></tr></thead>
       <tbody>
@@ -42,11 +42,23 @@
         </tr>
       </tbody>
     </table>
-    <ng-template #noProd><span class="muted">Sem dados.</span></ng-template>
+    <ng-template #noProd><span class="muted">Sin datos.</span></ng-template>
+  </div>
+
+  <!-- TARJETA 2: Gráfico de barras (KPI) -->
+  <div class="card">
+    <apx-chart
+      [series]="prodBarOptions().series"
+      [chart]="prodBarOptions().chart"
+      [xaxis]="prodBarOptions().xaxis!"
+      [dataLabels]="prodBarOptions().dataLabels!"
+      [grid]="prodBarOptions().grid!"
+      [title]="prodBarOptions().title!">
+    </apx-chart>
   </div>
 
   <div class="card">
-    <h3>Alarmes por código</h3>
+    <h3>Alarmas por código</h3>
     <table *ngIf="d.alarmsByCode | keyvalue as kvs; else noAlarms">
       <thead><tr><th>Código</th><th>Eventos</th></tr></thead>
       <tbody>
@@ -62,4 +74,19 @@
     <h3>Temp. média</h3>
     <div class="big">{{ d.avgTemperature | number:'1.0-1' }} °C</div>
   </div>
+
+  <!-- Fila completa con línea en tiempo real -->
+<div class="card mt-3">
+  <apx-chart
+    [series]="tempLineOptions().series"
+    [chart]="tempLineOptions().chart"
+    [xaxis]="tempLineOptions().xaxis!"
+    [yaxis]="tempLineOptions().yaxis!"
+    [stroke]="tempLineOptions().stroke!"
+    [dataLabels]="tempLineOptions().dataLabels!"
+    [grid]="tempLineOptions().grid!"
+    [tooltip]="tempLineOptions().tooltip!"
+    [title]="tempLineOptions().title!">
+  </apx-chart>
+</div>
 </div>

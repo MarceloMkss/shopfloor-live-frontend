@@ -47,3 +47,24 @@ thead th { color:var(--muted); font-weight:600; }
   font-size: 2rem;
   margin: 0.5rem 0;
 }
+
+
+/* styles.scss (global) */
+.apexcharts-tooltip {
+  background: #0f172a !important;      /* fondo oscuro */
+  color: #e5e7eb !important;            /* texto claro */
+  border: 1px solid #334155 !important; /* borde */
+  box-shadow: 0 6px 24px rgba(0,0,0,.35) !important;
+}
+
+.apexcharts-tooltip-title {
+  background: #111827 !important;       /* header del tooltip */
+  border-bottom-color: #334155 !important;
+  color: #e5e7eb !important;
+}
+
+/* Por si el modo claro se cuela */
+.apexcharts-theme-light .apexcharts-tooltip {
+  background: #0f172a !important;
+  color: #e5e7eb !important;
+}
