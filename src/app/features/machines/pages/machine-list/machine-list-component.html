@@ -5,7 +5,9 @@
     <div>
       <label>Nombre</label>
       <input formControlName="name" placeholder="CNC-01" />
-      <small *ngIf="f.name.touched && f.name.invalid">Mínimo 3 caracteres</small>
+      <small *ngIf="f.name.touched && f.name.invalid"
+        >Mínimo 3 caracteres</small
+      >
     </div>
     <div>
       <label>Fabricante</label>
@@ -18,31 +20,57 @@
     <div>
       <label>Estado</label>
       <select formControlName="status">
+        <option value="">Todos</option>
         <option value="ACTIVE">ACTIVA</option>
         <option value="INACTIVE">INACTIVA</option>
+        <option value="MAINTENANCE">MANTENIMIENTO</option>
       </select>
     </div>
-    <div style="grid-column:1 / -1; text-align:right;">
+    <div style="grid-column: 1 / -1; text-align: right">
       <button type="submit" [disabled]="loading">Guardar</button>
-      <span *ngIf="loading" style="margin-left:.5rem;">Guardando…</span>
+      <span *ngIf="loading" style="margin-left: 0.5rem">Guardando…</span>
       <div class="error" *ngIf="errorMsg">{{ errorMsg }}</div>
     </div>
   </form>
 </div>
 
 <div class="card">
-  <table *ngIf="machines$ | async as machines">
-    <thead>
-      <tr><th>ID</th><th>Nombre</th><th>Fabricante</th><th>Modelo</th><th>Estado</th></tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let m of machines">
-        <td>{{ m.id }}</td>
-        <td>{{ m.name }}</td>
-        <td>{{ m.vendor }}</td>
-        <td>{{ m.model }}</td>
-        <td>{{ m.status }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <div *ngIf="page$ | async as p">
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Fabricante</th>
+          <th>Modelo</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let m of p.content; trackBy: trackById">
+          <td>{{ m.id }}</td>
+          <td>{{ m.name }}</td>
+          <td>{{ m.vendor }}</td>
+          <td>{{ m.model }}</td>
+          <td>{{ m.status }}</td>
+        </tr>
+        <tr *ngIf="!p.content.length">
+          <td colspan="5" class="muted" style="text-align:center">Sem resultados.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="table-footer">
+      <div class="pager">
+        <button aria-label="Página anterior" [disabled]="p.number===0" (click)="setPage(p.number - 1)">«</button>
+        <span>Página {{ p.number + 1 }} / {{ p.totalPages }}</span>
+        <button aria-label="Página siguiente" [disabled]="p.number+1>=p.totalPages" (click)="setPage(p.number + 1)">»</button>
+      </div>
+      <div class="page-size">
+        <select formControlName="size">
+          <option *ngFor="let s of [5,10,20,50]" [value]="s">{{s}} / página</option>
+        </select>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { BehaviorSubject, map, Observable, startWith, switchMap } from 'rxjs';
 import { Machine } from '../../models/machine/machine';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -11,7 +11,8 @@ import { Page } from '../../models/pages/page';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './machine-list-component.html',
-  styleUrl: './machine-list-component.scss'
+  styleUrl: './machine-list-component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MachineListComponent {
 
@@ -19,7 +20,10 @@ export class MachineListComponent {
   private service = inject(MachineService);
 
    // filtro por estado + paginación
-  filterForm = this.fb.group({ status: [''] });
+  filterForm = this.fb.group({ 
+    status: [''], 
+    page: [0] 
+  });
   pageIndex = 0;
   pageSize = 10;
 
@@ -33,6 +37,10 @@ export class MachineListComponent {
       this.pageSize
     ))
   );
+
+  trackById = (_:number, m:Machine) => m.id!;
+  setPage(n:number){ this.filterForm.patchValue({ page: n }, { emitEvent: true }); }
+
   // para la tabla
   rows$ = this.page$.pipe(map((p: Page<Machine>) => p.content));
 

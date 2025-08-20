@@ -19,9 +19,14 @@ export class MachineService {
     return this.http.post<Machine>(this.base, payload);
   }
 
-  getPage(status = '', page = 0, size = 10): Observable<Page<Machine>> {
+  getPageAntiguo(status = '', page = 0, size = 10): Observable<Page<Machine>> {
     const params = { status, page, size };
     return this.http.get<Page<Machine>>(`${this.base}/page`, { params });
+  }
+  getPage(status = '', page = 0, size = 10) {
+    return this.http.get<Page<Machine>>(`${this.base}/page`, {
+      params: { status, page, size },
+    });
   }
   get(id: number): Observable<Machine> {
     return this.http.get<Machine>(`${this.base}/${id}`);

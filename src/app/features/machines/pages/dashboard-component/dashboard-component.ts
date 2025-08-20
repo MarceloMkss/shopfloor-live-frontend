@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Subject, merge, startWith, debounceTime, switchMap, takeUntil, map, Observable } from 'rxjs';
 import { KpiService } from '../../services/kpi.service';
@@ -11,7 +11,8 @@ import { ProductionKpi } from '../../models/kpi/kpi.model';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './dashboard-component.html',
-  styleUrls: ['./dashboard-component.scss'] // <- plural
+  styleUrls: ['./dashboard-component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardComponent implements OnInit, OnDestroy {
   private fb = inject(FormBuilder);
@@ -27,12 +28,22 @@ export class DashboardComponent implements OnInit, OnDestroy {
   });
 
   // Cambios de fechas + disparos del socket/botón
-  data$: Observable<ProductionKpi> = merge(
+/*   data$: Observable<ProductionKpi> = merge(
     this.form.valueChanges.pipe(startWith(this.form.value)),
     this.refresh$.pipe(map(() => this.form.getRawValue()))
   ).pipe(
     debounceTime(300),
     switchMap(v => this.kpi.getProductionKpis(v!.from!, v!.to!))
+  );
+ */
+
+    // refresh quando form muda + quando recebe evento de socket
+  data$: Observable<ProductionKpi> = merge(
+    this.form.valueChanges.pipe(startWith(this.form.value), map(() => true)),
+    this.refresh$.pipe(map(() => true)),
+    this.socket.stream$.pipe(map(() => true))
+  ).pipe(
+    switchMap(() => this.kpi.getProductionKpis(this.form.value!.from!, this.form.value!.to!))
   );
 
   ngOnInit(): void {
@@ -48,6 +59,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
     this.socket.disconnect();
   }
+
+  trackByMachine = (_: number, m: { machine: string }) => m.machine;
+  trackByKey     = (_: number, kv: { key: string, value: number }) => kv.key;
 
   // si tienes botón "Actualizar" en la UI
   onRefreshClick() {

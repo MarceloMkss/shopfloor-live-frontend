@@ -1,0 +1,34 @@
+.row{ display:flex; gap:12px; align-items:center; }
+.tbl{ width:100%; border-collapse:collapse; }
+.tbl th, .tbl td{ padding:.6rem .8rem; border-bottom:1px solid #1f2937; }
+.tbl thead th{ text-align:left; color:#aab4c2; font-weight:600; background:#0b1222; }
+.pager{ display:flex; gap:12px; align-items:center; justify-content:flex-end; margin-top:10px; }
+button{ background:#0b1222; color:#e2e8f0; border:1px solid #1f2937; padding:.35rem .6rem; border-radius:8px; }
+button:disabled{ opacity:.5; cursor:not-allowed; }
+select{ background:#0b1222; color:#e2e8f0; border:1px solid #1f2937; padding:.35rem .6rem; border-radius:8px; }
+
+.table-footer {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  padding: .5rem 0;
+}
+
+.pager button {
+  background: #0b1222;
+  color: #e2e8f0;
+  border: 1px solid #1f2937;
+  padding: .35rem .6rem;
+  border-radius: 8px;
+}
+
+.page-size select {
+  background: #0b1222;
+  color: #e2e8f0;
+  border: 1px solid #1f2937;
+  padding: .35rem .6rem;
+  border-radius: 8px;
+}
+
+

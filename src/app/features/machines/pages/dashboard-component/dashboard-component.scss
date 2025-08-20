@@ -1,0 +1,12 @@
+.grid { display:grid; gap:16px;
+  &.grid-3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
+}
+.card { background:#0f172a; border-radius:12px; padding:16px; box-shadow: 0 1px 2px rgba(0,0,0,.25); }
+.muted { color:#94a3b8; }
+.big { font-size:2.2rem; font-weight:700; }
+.btn { background:#22d3ee; color:#0b1020; border:0; padding:.6rem 1rem; border-radius:8px; cursor:pointer; }
+.skeleton { position:relative; overflow:hidden; background:#1f2937; }
+.skeleton::after { content:''; position:absolute; inset:0; background:linear-gradient(90deg, transparent, rgba(255,255,255,.08), transparent);
+  animation: shimmer 1.1s infinite; }
+@keyframes shimmer { from{ transform:translateX(-100%);} to{ transform:translateX(100%);} }
+@media (max-width: 900px){ .grid-3{ grid-template-columns: 1fr; } }

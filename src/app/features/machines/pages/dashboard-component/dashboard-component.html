@@ -18,47 +18,48 @@
       <button type="button" (click)="form.updateValueAndValidity()">Actualizar</button>
     </div>
   </form>
+
+  <!-- skeleton -->
+  <ng-template #skeleton>
+    <div class="grid grid-3">
+      <div class="card skeleton h-28"></div>
+      <div class="card skeleton h-28"></div>
+      <div class="card skeleton h-28"></div>
+    </div>
+  </ng-template>
+
 </div>
 
-<div *ngIf="data$ | async as d" class="grid grid-3">
-  
+<div *ngIf="data$ | async as d; else skeleton" class="grid grid-3">
   <div class="card">
-    <h3>Producción por máquina</h3>
-
+    <h3>Produção por máquina</h3>
     <table *ngIf="d.productionByMachine?.length; else noProd">
       <thead><tr><th>Máquina</th><th>Qty</th></tr></thead>
       <tbody>
-        <tr *ngFor="let m of d.productionByMachine">
+        <tr *ngFor="let m of d.productionByMachine; trackBy: trackByMachine">
           <td>{{ m.machine }}</td>
           <td>{{ m.qty }}</td>
         </tr>
       </tbody>
     </table>
-    <ng-template #noProd><span class="muted">Sin datos en el rango.</span></ng-template>
+    <ng-template #noProd><span class="muted">Sem dados.</span></ng-template>
   </div>
 
   <div class="card">
-
-    <h3>Alarmas por código</h3>
-
-    <table *ngIf="d.alarmsByCode | keyvalue as kv; else noAlarms">
+    <h3>Alarmes por código</h3>
+    <table *ngIf="d.alarmsByCode | keyvalue as kvs; else noAlarms">
       <thead><tr><th>Código</th><th>Eventos</th></tr></thead>
       <tbody>
-        <tr *ngFor="let a of kv">
-          <td>{{ a.key }}</td>
-          <td>{{ a.value }}</td>
+        <tr *ngFor="let a of kvs; trackBy: trackByKey">
+          <td>{{ a.key }}</td><td>{{ a.value }}</td>
         </tr>
       </tbody>
     </table>
-    <ng-template #noAlarms>
-      <span class="muted">Sin alarmas.</span>
-    </ng-template>
+    <ng-template #noAlarms><span class="muted">Sem alarmes.</span></ng-template>
   </div>
 
   <div class="card">
-    <h3>Temp. media</h3>
-     <div class="kpi-big">
-      {{ d.avgTemperature | number:'1.0-2' }} °C
-    </div>
+    <h3>Temp. média</h3>
+    <div class="big">{{ d.avgTemperature | number:'1.0-1' }} °C</div>
   </div>
 </div>
